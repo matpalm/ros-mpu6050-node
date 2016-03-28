@@ -1,5 +1,6 @@
 #include <ros/ros.h>
-#include <std_msgs/Float32MultiArray.h>
+#include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Vector3.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
@@ -29,33 +30,28 @@ int main(int argc, char **argv) {
   // Start ROS node stuff.
   ros::init(argc, argv, "mpu6050");
   ros::NodeHandle node;
-  ros::Publisher pub = node.advertise<std_msgs::Float32MultiArray>("mpu6050", 10);
+  ros::Publisher pub = node.advertise<sensor_msgs::Imu>("mpu6050", 10);
   ros::Rate rate(10);  // hz
 
   // Publish in loop.
   while(ros::ok()) {
-    std_msgs::Float32MultiArray msg;
+    sensor_msgs::Imu msg;
 
-    // Read raw gyroscope values.
-    float gx = read_word_2c(fd, 0x43);
-    float gy = read_word_2c(fd, 0x45);
-    float gz = read_word_2c(fd, 0x47);
+    // Read yroscope values.
     // At default sensitivity of 250deg/s we need to scale by 131.
-    msg.data.push_back(gx / 131);
-    msg.data.push_back(gy / 131);
-    msg.data.push_back(gz / 131);
+    msg.angular_velocity.x = read_word_2c(fd, 0x43) / 131;
+    msg.angular_velocity.y = read_word_2c(fd, 0x45) / 131;
+    msg.angular_velocity.z = read_word_2c(fd, 0x47) / 131;
 
-    // Read raw accelerometer values.
-    float ax = read_word_2c(fd, 0x3b);
-    float ay = read_word_2c(fd, 0x3d);
-    float az = read_word_2c(fd, 0x3f);
+    // Read accelerometer values.
     // At default sensitivity of 2g we need to scale by 16384.
-    msg.data.push_back(ax / 16384);
-    msg.data.push_back(ay / 16384);
-    msg.data.push_back(az / 16384);
     // Note: at "level" x = y = 0 but z = 1 (i.e. gravity)
+    msg.linear_acceleration.x = read_word_2c(fd, 0x3b) / 16384;
+    msg.linear_acceleration.y = read_word_2c(fd, 0x3d) / 16384;
+    msg.linear_acceleration.z = read_word_2c(fd, 0x3f) / 16384;
+
+    // Pub & sleep.
     pub.publish(msg);
-    
     rate.sleep();
   }
   return 0;
