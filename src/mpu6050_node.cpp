@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
   while(ros::ok()) {
     sensor_msgs::Imu msg;
 
-    // Read yroscope values.
+    // Read gyroscope values.
     // At default sensitivity of 250deg/s we need to scale by 131.
     msg.angular_velocity.x = read_word_2c(fd, 0x43) / 131;
     msg.angular_velocity.y = read_word_2c(fd, 0x45) / 131;
