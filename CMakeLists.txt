@@ -135,6 +135,7 @@ add_executable(mpu6050_node src/mpu6050_node.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(mpu6050_node
   ${catkin_LIBRARIES}
+  wiringPi
 )
 
 #############
