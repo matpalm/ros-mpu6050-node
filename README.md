@@ -1,6 +1,6 @@
 [ROS](http://www.ros.org/) node wrapper for the [mpu6050](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/) gyroscope / accelerometer.
 
-![mpu6050(mpu6050.png)
+![mpu6050](mpu6050.png)
 
 Publishes [sensor_msgs::IMU](http://docs.ros.org/api/sensor_msgs/html/msg/Imu.html) messages at 10Hz to `/mpu6050` topic. 
 Specifically populates `angular_velocity` & `linear_acceleration`.
