@@ -1,4 +1,4 @@
-[ROS](http://www.ros.org/) node wrapper for the [mpu6050](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/) gyroscope / accelerometer.
+c++ [ROS](http://www.ros.org/) node wrapper for the [mpu6050](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/) gyroscope / accelerometer.
 
 ![mpu6050](mpu6050.png)
 
