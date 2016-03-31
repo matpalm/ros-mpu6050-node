@@ -1,13 +1,12 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
-#include <geometry_msgs/Vector3.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#define I2C_ADDR 0x68
-#define PWR_MGMT_1 0x6B
-
 using namespace std;
+
+const int I2C_ADDR = 0x68;
+const int PWR_MGMT_1 = 0x6B;
 
 float read_word_2c(int fd, int addr) {
   int high = wiringPiI2CReadReg8(fd, addr);
@@ -36,6 +35,8 @@ int main(int argc, char **argv) {
   // Publish in loop.
   while(ros::ok()) {
     sensor_msgs::Imu msg;
+    msg.header.stamp = ros::Time::now();
+    msg.header.frame_id = '0';  // no frame
 
     // Read gyroscope values.
     // At default sensitivity of 250deg/s we need to scale by 131.
