@@ -1,6 +1,9 @@
-[ros](http://www.ros.org/) node wrapper for the [mpu6050](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/) gyroscope / accelerometer.
+[ROS](http://www.ros.org/) node wrapper for the [mpu6050](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/) gyroscope / accelerometer.
 
-publishes [sensor_msgs::IMU](http://docs.ros.org/api/sensor_msgs/html/msg/Imu.html) messages at 10Hz to `/mpu6050` topic.
+![mpu6050(mpu6050.png)
+
+Publishes [sensor_msgs::IMU](http://docs.ros.org/api/sensor_msgs/html/msg/Imu.html) messages at 10Hz to `/mpu6050` topic. 
+Specifically populates `angular_velocity` & `linear_acceleration`.
 
 on rasp pi 2 uses ~1% cpu and <1% mem
 
@@ -32,6 +35,6 @@ linear_acceleration:
 ````		    
 
 TODOS
-* no tf support at all, at very least some kind of zeroing service call would be nice...
+* no tf support at all, at very least some kind of zeroing service call would be nice... (also set frame_id)
 * no handling of sensor noise (though perhaps better to include directly in filter using this for tracking actual rover)
-
+* populate covariance values. 
