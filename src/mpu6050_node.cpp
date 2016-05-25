@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   // Start ROS node stuff.
   ros::init(argc, argv, "mpu6050");
   ros::NodeHandle node;
-  ros::Publisher pub = node.advertise<sensor_msgs::Imu>("mpu6050", 10);
+  ros::Publisher pub = node.advertise<sensor_msgs::Imu>("imu", 10);
   ros::Rate rate(10);  // hz
 
   // Publish in loop.
