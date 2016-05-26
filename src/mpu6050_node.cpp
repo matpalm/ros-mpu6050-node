@@ -53,6 +53,7 @@ int main(int argc, char **argv) {
 
     // Pub & sleep.
     pub.publish(msg);
+    ros::spinOnce();
     rate.sleep();
   }
   return 0;
