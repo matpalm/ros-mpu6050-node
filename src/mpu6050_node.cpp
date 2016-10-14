@@ -47,9 +47,11 @@ int main(int argc, char **argv) {
     // Read accelerometer values.
     // At default sensitivity of 2g we need to scale by 16384.
     // Note: at "level" x = y = 0 but z = 1 (i.e. gravity)
-    msg.linear_acceleration.x = read_word_2c(fd, 0x3b) / 16384;
-    msg.linear_acceleration.y = read_word_2c(fd, 0x3d) / 16384;
-    msg.linear_acceleration.z = read_word_2c(fd, 0x3f) / 16384;
+    // But! Imu msg docs say acceleration should be in m/2 so need to *9.807
+    const float la_rescale = 16384.0 / 9.807;
+    msg.linear_acceleration.x = read_word_2c(fd, 0x3b) / la_rescale;
+    msg.linear_acceleration.y = read_word_2c(fd, 0x3d) / la_rescale;
+    msg.linear_acceleration.z = read_word_2c(fd, 0x3f) / la_rescale;
 
     // Pub & sleep.
     pub.publish(msg);
